@@ -1,6 +1,14 @@
 import { Oferta } from './shared/oferta.model'
+import { Http } from '@angular/http';
+import { Injectable } from '@angular/core'
 
+@Injectable()
 export class OfertasService{
+
+    constructor(private http: Http){
+
+    }
+
     public getOfertas(): Array<Oferta>{
 
         let ofertas: Array<Oferta> = [
