@@ -3,15 +3,16 @@ import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs';
+import { URL_API } from './app.api';
 
 @Injectable()
 export class OfertasService{
 
     constructor(private http: Http){
-
+        this.apiUrl += "ofertas/"
     }
 
-    private apiUrl: string = 'http://localhost:3000/ofertas/';
+    private apiUrl: string = URL_API;
 
     public getOfertas(): Promise<Array<Oferta>>{
 
