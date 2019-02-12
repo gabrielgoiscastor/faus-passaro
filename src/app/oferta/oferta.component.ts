@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
 import { ActivatedRoute } from '@angular/router';
-import { interval, Observable, Observer } from 'rxjs';
+import { interval, Observable, Observer, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-oferta',
@@ -10,11 +10,14 @@ import { interval, Observable, Observer } from 'rxjs';
   styleUrls: ['./oferta.component.css'],
   providers: [ OfertasService ]
 })
-export class OfertaComponent implements OnInit {
+export class OfertaComponent implements OnInit, OnDestroy {
 
   private ofertaId: number;
   private oferta: Oferta;
   private imagemAtual: string;
+
+  private tempoSubscription: Subscription;
+  private meuSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private ofertasService: OfertasService) {
     this.imagemAtual = "";
@@ -29,13 +32,13 @@ export class OfertaComponent implements OnInit {
       () => { console.log('ACABOOOU!!! É TETRA!!!!') }
     );
 
-    // let intervalObs = interval(500);
+    let intervalObs = interval(500);
 
-    // intervalObs.subscribe(
-    //   () => console.log('passo'),
-    //   () => console.log('erro'),
-    //   () => console.log('end')
-    // );
+    this.tempoSubscription = intervalObs.subscribe(
+      (tempo: any) => console.log(tempo),
+      () => console.log('erro'),
+      () => console.log('end')
+    );
 
     //observable gerador
     let meuObs = Observable.create((observer: Observer<string>) =>{
@@ -43,7 +46,7 @@ export class OfertaComponent implements OnInit {
     });
 
     //observer
-    meuObs.subscribe(
+    this.meuSubscription = meuObs.subscribe(
       (a: any) => console.log(a)
     );
 
@@ -58,6 +61,11 @@ export class OfertaComponent implements OnInit {
 
   mudarFull(imagem: string){
     this.imagemAtual = imagem;
+  }
+
+  ngOnDestroy(){
+    this.tempoSubscription.unsubscribe();
+    this.meuSubscription.unsubscribe();
   }
 
 }
