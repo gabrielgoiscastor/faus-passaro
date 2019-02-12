@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
 import { ActivatedRoute } from '@angular/router';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-oferta',
@@ -26,6 +27,14 @@ export class OfertaComponent implements OnInit {
       (parametro: any) =>{ this.ofertaId = parametro.id; this.loadOferta() },
       (erro: any) => {console.log(erro)},
       () => { console.log('ACABOOOU!!! É TETRA!!!!') }
+    );
+
+    let intervalObs = interval(500);
+
+    intervalObs.subscribe(
+      () => console.log('passo'),
+      () => console.log('erro'),
+      () => console.log('end')
     );
 
   }
