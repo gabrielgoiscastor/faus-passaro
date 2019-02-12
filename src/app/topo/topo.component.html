@@ -8,7 +8,8 @@
           </a></div>
         <div class="col-md-6">
           <input type="text" class="form-control" placeholder="Pesquise uma oferta"
-          (keyup)="pesquisa($event)"
+          #termoBusca
+          (keyup)="pesquisa(termoBusca.value)"
           />
         </div>
         <div class="col-md-2"><a a routerLink="/"><img src="/assets/carrinho.png" /></a></div>
