@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
 import { ActivatedRoute } from '@angular/router';
-import { interval } from 'rxjs';
+import { interval, Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-oferta',
@@ -29,12 +29,22 @@ export class OfertaComponent implements OnInit {
       () => { console.log('ACABOOOU!!! É TETRA!!!!') }
     );
 
-    let intervalObs = interval(500);
+    // let intervalObs = interval(500);
 
-    intervalObs.subscribe(
-      () => console.log('passo'),
-      () => console.log('erro'),
-      () => console.log('end')
+    // intervalObs.subscribe(
+    //   () => console.log('passo'),
+    //   () => console.log('erro'),
+    //   () => console.log('end')
+    // );
+
+    //observable gerador
+    let meuObs = Observable.create((observer: Observer<string>) =>{
+      observer.next('passo1');
+    });
+
+    //observer
+    meuObs.subscribe(
+      (a: any) => console.log(a)
     );
 
   }
