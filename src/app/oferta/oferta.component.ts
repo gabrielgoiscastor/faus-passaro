@@ -22,13 +22,19 @@ export class OfertaComponent implements OnInit {
   ngOnInit() {
     //this.ofertaId = this.route.snapshot.params['id'];
 
-    this.route.params.subscribe((parametro: any) => this.ofertaId = parametro.id);
+    this.route.params.subscribe(
+      (parametro: any) =>{ this.ofertaId = parametro.id; this.loadOferta() },
+      (erro: any) => {console.log(erro)},
+      () => { console.log('ACABOOOU!!! É TETRA!!!!') }
+    );
 
+  }
+
+  loadOferta(){
     this.ofertasService.getOfertaPorId(this.ofertaId).then((retorno: Oferta) => {
       this.oferta = retorno;
       this.imagemAtual = this.oferta.imagens[0].url;
     });
-
   }
 
   mudarFull(imagem: string){
